@@ -1,0 +1,107 @@
+{
+    "input_review": "The product is useful but the app is slow and frustrating.",
+    "single_agent": {
+        "sentiment": "negative",
+        "issue": "performance",
+        "recommendation": "Investigate application performance.",
+        "architecture": "single-agent",
+        "execution_log": [
+            "Input received",
+            "Analyzing sentiment",
+            "Detecting main issue",
+            "Generating recommendation",
+            "Execution completed"
+        ]
+    },
+    "multi_agent": {
+        "sentiment": "negative",
+        "issue": "performance",
+        "recommendation": "Investigate application performance.",
+        "architecture": "multi-agent",
+        "analyst_output": {
+            "sentiment": "negative",
+            "issue": "performance",
+            "evidence": [
+                "slow",
+                "frustrating"
+            ]
+        },
+        "reviewer_output": {
+            "issue": "general",
+            "agrees": false,
+            "review_note": "Controlled disagreement: Reviewer proposes a different issue."
+        },
+        "resolution_reason": "Analyst selected because the original review contains explicit evidence of slow application performance.",
+        "execution_log": [
+            "Coordinator received product review",
+            "Delegated analyze_review to Analyst",
+            "Handed Analyst output to Reviewer",
+            "Conflict resolution completed",
+            "Coordinator combined all outputs"
+        ],
+        "message_count": 4,
+        "messages": [
+            {
+                "sender": "Coordinator",
+                "receiver": "Analyst",
+                "task": "analyze_review",
+                "payload": {
+                    "review_text": "The product is useful but the app is slow and frustrating."
+                },
+                "status": "completed"
+            },
+            {
+                "sender": "Analyst",
+                "receiver": "Coordinator",
+                "task": "analyze_review",
+                "payload": {
+                    "sentiment": "negative",
+                    "issue": "performance",
+                    "evidence": [
+                        "slow",
+                        "frustrating"
+                    ]
+                },
+                "status": "completed"
+            },
+            {
+                "sender": "Coordinator",
+                "receiver": "Reviewer",
+                "task": "review_analysis",
+                "payload": {
+                    "analysis": {
+                        "sentiment": "negative",
+                        "issue": "performance",
+                        "evidence": [
+                            "slow",
+                            "frustrating"
+                        ]
+                    },
+                    "original_review": "The product is useful but the app is slow and frustrating."
+                },
+                "status": "completed"
+            },
+            {
+                "sender": "Reviewer",
+                "receiver": "Coordinator",
+                "task": "review_analysis",
+                "payload": {
+                    "issue": "general",
+                    "agrees": false,
+                    "review_note": "Controlled disagreement: Reviewer proposes a different issue."
+                },
+                "status": "completed"
+            }
+        ]
+    },
+    "comparison": {
+        "same_sentiment": true,
+        "same_issue": true,
+        "same_recommendation": true,
+        "single_agent_stages": 5,
+        "multi_agent_events": 5,
+        "multi_agent_messages": 4,
+        "single_agent_specialists": 1,
+        "multi_agent_specialists": 2
+    }
+}
